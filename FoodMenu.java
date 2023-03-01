@@ -1,27 +1,42 @@
 package foodmenu;
 import java.util.*;
+
 public class FoodMenu {
-    private String name;
-    private double price;
-    
+    private String name, itemName;
+    private double price, newPrice;
+    Scanner sc1 = new Scanner(System.in);
     public FoodMenu(String n, double p){
         this.name = n;
         this.price = p;
     }
-    public void addItems(String n, double p){
-        this.name = n;
-        this.price = p;
-        System.out.println("Added: " + n + " to the menu for: $" + p);
+    public void addItems(){
+        System.out.println("=============");
+        System.out.println("Enter new menu item name: ");
+        name = sc1.next();
+        System.out.println("Enter new menu item price: ");
+        price = sc1.nextDouble();
     }
     public void editPrice(String n, double p){
-       this.price = p;
-       System.out.println("Changed price of: " + n + " to: $" + p);
+      System.out.println("Enter menu item name: ");
+      itemName = sc1.next();
+      if(itemName.equals(name)){
+          System.out.println("Enter new menu item price: ");
+          newPrice = sc1.nextDouble();
+          price = newPrice;
+      }else{
+          System.out.println("Error: item is not on the menu");
+      }
+    }
+    public void displayMenu(){
+        System.out.println("=============");
+        System.out.println("Current Menu:");
+        System.out.println(name + " :$" + price);
+        System.out.println("=============");
     }
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        FoodMenu[] menu = new FoodMenu[10];
+        FoodMenu menu = new FoodMenu("", 10);
+        Scanner sc2 =new Scanner(System.in);
         boolean running = true;
-        
         while(running){
         System.out.println("==={Menu}===");
         System.out.println("1. Insert");
@@ -29,61 +44,25 @@ public class FoodMenu {
         System.out.println("3. View");
         System.out.println("4. Exit");
         System.out.println("============");
-        int choice = scan.nextInt();
+        int choice = sc2.nextInt();
         
         switch(choice){
             case 1:
-                for(int i = 0; i < menu.length; i++){
-                 System.out.println("Enter new menu item name: ");
-                 String newName = scan.next();
-                 System.out.println("Enter new menu item price: ");
-                 double newPrice = scan.nextDouble();
-                 boolean exists = false;
-                for(int ib = 0; ib < i; ib++){
-                    if(menu[ib].name.equals(newName)){
-                        System.out.println("Error: item already on menu");
-                        exists = true;
-                        break;
-                    }
-                }
-                    if(!exists){
-                        menu[i] = new FoodMenu(newName, newPrice);
-                        System.out.println("Added: " + newName + " for: $" + newPrice);
-                    }
-                }
+                menu.addItems();
                 break;
             case 2:
-                System.out.println("Enter item name");
-                String itemName = scan.next();
-                int index = -1;
-                for(int ii = 0; ii < menu.length; ii++){
-                    if(menu[ii].name.equals(itemName)){
-                        index = ii;
-                        break;
-                    }
-                }
-                if(index == -1){
-                    System.out.println("Error: item not found");
-                }else{
-                    System.out.println("Enter new item price");
-                    double newPrice = scan.nextDouble();
-                    menu[index].editPrice(itemName, newPrice);
-                }
+                menu.editPrice("", 0);
                 break;
             case 3:
-                for(int iii = 0; iii < menu.length; iii++){
-                    if(menu != null){
-                        System.out.println(menu[iii].name + " $" + menu[iii].price);
-                    }
-                }
+                menu.displayMenu();
                 break;
             case 4:
                 System.out.println("Closing menu");
                 running = false;
                 break;
             default:
-                System.out.println("Error: invalid input");
-            }
+                System.out.println("Error: invalid intput");
+        }
         }
         }
     }    
