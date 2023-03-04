@@ -9,20 +9,14 @@ public class FoodMenu {
         this.name = n;
         this.price = p;
     }
-    public void addItems(){
-        
-    }
-    public void editPrice(String n, double p){
-    
-    }
-    public void displayMenu(){
+    public void display(String n, double p){
         System.out.println("=============");
         System.out.println("Current Menu:");
         System.out.println(name + " :$" + price);
         System.out.println("=============");
     }
     public static void main(String[] args) {
-        Scanner scan =new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         boolean running = true;
         while(running){
         System.out.println("==={Menu}===");
@@ -43,13 +37,25 @@ public class FoodMenu {
                 FoodMenu menu = new FoodMenu(name, price);
             break;
             case 2:
-                
+                System.out.println("Enter item name: ");
+                scan.next();
+                name = scan.next();
+                if(name.equals(name)){
+                    System.out.println("Error: Item is not on the menu");
+                }else{
+                    System.out.println("Enter item's new price: ");
+                    scan.nextDouble();
+                    price = scan.nextDouble();
+                }
             break;
             case 3:
-                
+                System.out.println("=============");
+                System.out.println("Current Menu:");
+                System.out.println();
+                System.out.println("=============");
             break;
             case 4:
-            System.out.println("Closing menu");
+                System.out.println("Closing menu");
             running = false;
             break;
             default:
