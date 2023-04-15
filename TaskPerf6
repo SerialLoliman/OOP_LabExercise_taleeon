@@ -1,0 +1,65 @@
+package taskperf6;
+import  java.nio.file.*;
+import java.io.*;
+import static java.nio.file.StandardOpenOption.*;
+import java.util.*;
+import java.text.*;
+
+public class TaskPerf6 {
+    
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        Path file = Paths.get("C:\\Java\\Records\\records.txt");
+        String delimiter = ",";
+        String USER = "";
+        String username;
+        String password;
+        String login;
+        
+        int a;
+        byte[] data = USER.getBytes();
+        OutputStream output1 = null;
+        
+        try{
+            System.out.println("===User Database===");
+            System.out.println("1: REGISTER");
+            System.out.println("2: LOGIN");
+            System.out.println("===================");
+            int choice = input.nextInt();
+            output1 = new BufferedOutputStream(Files.newOutputStream(file, CREATE));
+            output1.write(data);
+            OutputStream output2 = new BufferedOutputStream(Files.newOutputStream(file, CREATE));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(output2));
+                    
+            switch(choice){
+                case 1:                     
+                    System.out.println("Enter new username: ");
+                    username = input.next();
+                    System.out.println("Enter password: ");
+                    password = input.next();
+                    USER = username + delimiter + password; 
+                    writer.write(USER, 0, USER.length());
+                    writer.newLine();
+                    System.out.print("Saved user data");
+                    writer.close();
+                break;
+                case 2:   
+                    System.out.println("Enter username: ");
+                    login = input.next(); 
+                    System.out.println("Enter password");
+                    login = input.next();
+                    if(login.equals(output1)){
+                        System.out.print("Successfully logged in");
+                    }
+                    else{
+                        System.out.println("ERROR: Incorrect username or password");
+                    }
+                break;        
+            }                        
+        }
+        catch(Exception e){
+            System.out.println("Message: " + e);
+        }
+    }
+    
+}
